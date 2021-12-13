@@ -1,4 +1,5 @@
 
+<%@page import="Modelo.Funcionario"%>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -8,12 +9,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Criar user Funcionario</title>
+        <title>Alterar Funcionario</title>
         <link href="../pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="View/pagesAdm/css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="View/pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
-        <script src="../pagesLogin/js/main.js" type="text/javascript"></script>
-        <script src="View/pagesLogin/js/main.js"></script>
-         <script  src="https://code.jquery.com/jquery-3.5.1.min.js"  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="  crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <script language="javascript">
@@ -76,9 +75,16 @@
         function mascaraCpf(valor) {
             return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3\-\$4");
         }
+
     </script>
 
     <body class="bg-primary">
+        <%
+               Funcionario fun = (Funcionario) session.getAttribute("funcionario");
+           if(fun == null){
+            response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginAdm.jsp");
+            }
+        %>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -86,25 +92,26 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Cadastro de Funcionário</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Alterar Funcionário</h3></div>
                                     <div class="card-body">
-                                        <form method="POST" action="/PapelariaOrigami/cadastrarFunc" name="LoginFun">
-                                            <%
-                                        String cpfFuncmsg = (String) request.getAttribute("cpfFuncmsg");
-                                        if (cpfFuncmsg != null) {
-                                            %>
-                            <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p> <h5 id="titulo"><%= cpfFuncmsg%></h5></p>
-                                    </div>
-                                </div>
-                       
-                            <%
-                            }
-                            %>
+                                        <%
+                                            Funcionario func = (Funcionario) request.getAttribute("lfunc");
+                                        %>
+                                        <form method="POST" action="/PapelariaOrigami/salvarFunc" name="alterarFunc" onsubmit="return validate();">
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label class="small mb-1" for="inputEmailAddress">ID</label>
+                                                    <input class="form-control py-2" id="numID" name="txtID" type="number"  value="<%=func.getId()%>"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="small mb-1" for="inputEmailAddress">Número Registro*</span>
+                                                <input class="form-control py-4" id="numReg" name="txtNumReg" type="number" value="<%=func.getRegistro()%>"/>
+                                                <span class="small mb-1"></span>
+                                            </div>
                                             <div class="form-group">
                                                 <span class="small mb-1" for="inputEmailAddress">CPF*</span>
-                                                <input class="form-control py-4" id="numCPF" name="txtCPF" type="text" maxlength="11"
+                                                <input class="form-control py-4" id="numCPF" name="txtCPF" type="text" maxlength="11" value="<%=func.getCpf()%>"
                                                        onblur="javascript: formatarCampo(this);"/>
                                                 <span class="small mb-1"></span>
                                             </div>
@@ -112,47 +119,29 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputFirstName">Nome*</label>
-                                                        <input class="form-control py-4" id="nome" name="txtNome" type="text" placeholder="Nome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
+                                                        <input class="form-control py-4" id="nome" name="txtNome" type="text" placeholder="Nome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="<%=func.getNome()%>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputLastName">Sobrenome*</label>
-                                                        <input class="form-control py-4" id="sobrenome" name="txtSobrenome" type="text" placeholder="Sobrenome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
+                                                        <input class="form-control py-4" id="sobrenome" name="txtSobrenome" type="text" placeholder="Sobrenome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="<%=func.getSobrenome()%>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="wrap-input100 validate-input" data-validate = "Senhas Fraca">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputPassword">Senha*</label>
-                                                        <input class="form-control py-4" id="password" name="txtSenha" type="password" minlength="8" maxlength="12" placeholder="Digite sua senha" onKeyUp="verificaForcaSenha();"  />
-                                                        
-                                                    </div>
+                                                        <input class="form-control py-4" id="senha" name="txtSenha" type="password" placeholder="Enter password" data-validate = "Senha não é forte o suficiente" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="wrap-input100 validate-input" data-validate = "Senhas diferentes">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputConfirmPassword">Confirmar Senha*</label>
                                                         <input class="form-control py-4" name="txtRepeteSenha" id="confirmaSenha" type="password" placeholder="Confirm password" />
                                                     </div>
-                                                        </div>
                                                 </div>
-                                                <span id="password-status"></span>
+                                                *Obrigatório
                                             </div>
-                                            <%
-                                        String senhaDiferente = (String) request.getAttribute("senhaDiferente");
-                                        if (senhaDiferente != null) {
-                                            %>
-                            <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p> <h5 id="titulo"><%= senhaDiferente%></h5></p>
-                                    </div>
-                                </div>
-                       
-                            <%
-                            }
-                            %>
                                             <div class="form-group mt-4 mb-0">
                                                 <input class="btn btn-primary btn-block" type="submit" value="Cadastrar" name="cad">
                                             </div>
@@ -181,7 +170,6 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="View/pagesLogin/js/scripts.js"></script>
-        <script src="js/scripts.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>

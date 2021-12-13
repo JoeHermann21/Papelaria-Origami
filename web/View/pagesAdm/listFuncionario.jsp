@@ -1,33 +1,22 @@
 <%@page import="Modelo.Funcionario"%>
-<%@page import="Modelo.Categoria"%>
 <%@page import="java.util.List"%>
-<html lang="pt-br">
 
+<html lang="pt-br">
     <head>
         <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-        <meta charset="UTF-8">
-        <meta name="description" content="Ogani Template">
-        <meta name="keywords" content="Ogani, unica, creative, html">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Cadastrar Categorias</title>
-
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-        <!-- Css Styles -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Funcionários</title>
+        <link href="View/pagesAdm/css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="View/pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 
-        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-        <link rel="stylesheet" href="css/styles.css" type="text/css">
-        <link href="View/pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="sb-nav-fixed">
@@ -38,8 +27,9 @@
             }
             Funcionario func = (Funcionario) session.getAttribute("logado");
         %>
+
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index2.jsp">Controle geral</a>
+            <a class="navbar-brand" href="index2.jsp">Lista de Funcionários</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <a class="navbar-brand" href="index2.jsp">Usuário: <%=func.getNome()%>  <%=func.getSobrenome()%></a>
             <!-- Navbar Search-->
@@ -51,6 +41,7 @@
                     </div>
                 </div>
             </form>
+            <!-- Navbar-->
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
@@ -115,84 +106,125 @@
         </nav>
     </div>
     <div id="layoutSidenav_content">
-        <div class="container-fluid">
-            <h1 class="mt-4">Cadastrar Categoria</h1>
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p> <h5 id="titulo"></h5></p>
-                </div>
-            </div>
-            <%
-                String cadCatemsg = (String) request.getAttribute("cadCatemsg");
-                if (cadCatemsg != null) {
-            %>
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p> <h5 id="titulo"><%= cadCatemsg%></h5></p>
-                </div>
-            </div>
-
-            <%
-                }
-            %>
-            <form method="POST" action="/PapelariaOrigami/cadastrarCategoria">
-                <div class="row">
-                    <div class="col-lg-8 col-md-6">  
-                        <div class="form-group">
-                            <label class="small mb-1" for="inputID">ID*</label>
-                            <input class="form-control py-4" id="inputID" type="text" name="txtID" readonly="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1" for="inputID">Descrição*</label>
-                            <input class="form-control py-4" id="inputDescricao" type="text" name="txtDescricao"placeholder="Descrição do Produto" />
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1" for="inputID">Sigla*</label>
-                            <input class="form-control py-4" id="inputData" type="text" name="txtSigla"placeholder="Sigla de identificação" maxlength="4" />
-                        </div>
-                        <p>
-                            <input class="button1" type="submit" value="Cadastrar" name="acao">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Lista de Funcionários</h1>
+                <%
+                    String deleteFunmsg = (String) request.getAttribute("deleteFunmsg");
+                    if (deleteFunmsg != null) {
+                %>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p> <h5 id="titulo"><%= deleteFunmsg%></h5></p>
                     </div>
-            </form> 
-        </div>
-    </div>
-</div>
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Criado por Origamis; Website 2021</div>
-            <div>
-                <a href="#">Politica de privacidade</a>
-                &middot;
-                <a href="#">Termos &amp; Condições</a>
+                </div>
+
+                <%
+                    }
+                %>
+                <div class="row">
+                    <div class="form__btn col-md-offset-0">
+                        <a class="button1" href="http://localhost:8080/PapelariaOrigami/View/pagesAdm/register.jsp">Cadastrar Funcionário</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p> <h5 id="titulo"></h5></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p> <h5 id="titulo"></h5></p>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Tabela de Funcionários
+                    </div><div class="card-body">
+                        <div class="table-responsive">
+                            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/PapelariaOrigami/FuncionarioDesc" method="get">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Pesquisar" name="txtDescricao" aria-describedby="basic-addon2" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit" name="acao"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                            <p>
+                            <p>
+                            <p>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Registro</th>
+                                        <th>Nome</th>
+                                        <th>Sobrenome</th>
+                                        <th>CPF</th>
+                                        <th>Excluir</th>
+                                        <th>Alterar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        List<Funcionario> lfunc = (List<Funcionario>) request.getAttribute("lfunc");
+
+                                        for (Funcionario f : lfunc) {
+                                    %><tr><%
+                                        %><td><%out.print(f.getId());%></td><%
+                                        %><td><%out.print(f.getRegistro());%></td><%
+                                        %><td><%out.print(f.getNome());%></td><%
+                                        %><td><%out.print(f.getSobrenome());%></td><%
+                                        %><td><%out.print(f.getCpf());%></td><%
+                                        %><td> <a href="http://localhost:8080/PapelariaOrigami/deletarFunc?txtID=<%=f.getId()%>"><img src="View/pagesAdm/img2/icon_lixeira.png" height="20" name="excluir" width="20"></a></td><%
+                                        %><td> <a href="http://localhost:8080/PapelariaOrigami/alterarFunc?txtID=<%=f.getId()%>"><img src="View/pagesAdm/img2/icon_lapis.png" height="20" width="20"></a></td><%
+                                        %></tr><%
+                                            }
+                                        %>
+
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Registro</th>
+                                        <th>Nome</th>
+                                        <th>Sobrenome</th>
+                                        <th>CPF</th>
+                                        <th>Excluir</th>
+                                        <th>Alterar</th>
+                                    </tr>
+                                </tfoot>
+                            </table>  
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Criado por Origamis Website 2021</div>
+                    <div>
+                        <a href="#">Pplitica de privacidade</a>
+                        &middot;
+                        <a href="#">Termos &amp; Condições</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-</footer>
 </div>
-<!-- Checkout Section End -->
-<!-- Footer Section End -->
-
-<!-- Js Plugins -->
-
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/mixitup.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="View/pagesAdm/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/datatables-demo.js"></script>
-
 </body>
-
 </html>

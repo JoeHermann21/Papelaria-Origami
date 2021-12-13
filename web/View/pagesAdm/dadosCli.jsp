@@ -1,4 +1,8 @@
 
+<%@page import="Modelo.Pedido"%>
+<%@page import="Modelo.Cliente"%>
+<%@page import="java.util.List"%>
+<%@page import="Modelo.Funcionario"%>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -29,9 +33,17 @@
         <link href="View/pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="sb-nav-fixed">
+        <%
+            Funcionario fun = (Funcionario) session.getAttribute("funcionario");
+            if (fun == null) {
+                response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginAdm.jsp");
+            }
+            Funcionario func = (Funcionario) session.getAttribute("logado");
+        %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="index2.jsp">Controle geral</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <a class="navbar-brand" href="index2.jsp">Usuário: <%=func.getNome()%>  <%=func.getSobrenome()%></a>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
@@ -46,7 +58,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="../pagesLogin/loginAdm.jsp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="../pagesLogin/loginAdm.jsp">Logout</a>
+                        <a class="dropdown-item" href="http://localhost:8080/PapelariaOrigami/logout">Logout</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
@@ -70,107 +82,130 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Cadastrar Categorias
                             </a>
-                            </a><a class="nav-link" href="http://localhost:8080/PapelariaOrigami/View/pagesAdm/cadFabricante.jsp">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Cadastrar Fabricantes
-                            </a>
-                            
-                            <div class="sb-sidenav-menu-heading">Listas</div>
-                            <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarCategorias">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Categorias
-                            </a>
-                            <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarFabricantes">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Fabricantes
-                            </a>
-                            
-                            <div class="sb-sidenav-menu-heading">Serviços</div>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/View/pagesAdm/dadosCli.jsp">Dados do cliente</a>
-                                <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarEsgotado">Produtos esgotando</a>
-                            </a>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/View/pagesAdm/register.jsp">Alterar perfil</a>
-                            </a>
+                        </a><a class="nav-link" href="http://localhost:8080/PapelariaOrigami/View/pagesAdm/cadFabricante.jsp">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Cadastrar Fabricantes
+                    </a>
 
-                            <div class="sb-sidenav-footer">
-                                <div class="small">Logado em:</div>
-                                Papelaria Origami
-                            </div>
-                        </div>
-                </nav>
+                    <div class="sb-sidenav-menu-heading">Listas</div>
+                    <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarCategorias">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Categorias
+                    </a>
+                    <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarFabricantes">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Fabricantes
+                    </a>
+                    <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarDevolucao">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Devolução
+                    </a>
+
+                    <div class="sb-sidenav-menu-heading">Serviços</div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/pedidos">Dados do cliente</a>
+                        <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarEsgotado">Produtos esgotando</a>
+                        <a class="nav-link" href="http://localhost:8080/PapelariaOrigami/listarFunc">Perfil Funcionário</a>
+                    </a>
+
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logado em:</div>
+                        Papelaria Origami
+                    </div>
+                </div>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid">
-                        <h1 class="mt-4">Painel de Controle</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Estoque</li>
-                        </ol>
-                        <div class="row">
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table mr-1"></i>
-                                Tabela de produtos
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                      <thead>
-                                            <tr>
-                                                <th>Cliente</th>
-                                                <th>Código da compra</th>
-                                                <th>CEP</th>
-                                                <th>UF</th>
-                                                <th>Cidade</th>
-                                                <th>Número da casa</th>
-                                                <th>Bairro</th>
-                                                <th>Rua</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Cliente</th>
-                                                <th>Código da compra</th>
-                                                <th>CEP</th>
-                                                <th>UF</th>
-                                                <th>Cidade</th>
-                                                <th>Número da casa</th>
-                                                <th>Bairro</th>
-                                                <th>Rua</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Painel de controle de pedidos</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Pedidos</li>
+                </ol>
+               
+                <div class="row">
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Tabela de pedidos
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Código da compra</th>
+                                        <th>CEP</th>
+                                        <th>UF</th>
+                                        <th>Cidade</th>
+                                        <th>Número da casa</th>
+                                        <th>Bairro</th>
+                                        <th>Rua</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Código da compra</th>
+                                        <th>CEP</th>
+                                        <th>UF</th>
+                                        <th>Cidade</th>
+                                        <th>Número da casa</th>
+                                        <th>Bairro</th>
+                                        <th>Rua</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <%
+                                        List<Pedido> listPedido = (List<Pedido>) request.getAttribute("lpedido");
+
+                                        for (Pedido ped : listPedido) {
+                                    %><tr><%
+                                        %><td><%out.print(ped.getCliente().getEmail());%></td><%
+                                        %><td><%out.print(ped.getId());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getCep());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getUf());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getCidade());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getNumero());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getBairro());%></td><%
+                                        %><td><%out.print(ped.getCliente().getEndereco().getLogradouro());%></td><%
+                                        %><td> <a href="http://localhost:8080/PapelariaOrigami/mostrarPedido?id=<%=ped.getId()%>"><img src="View/pagesAdm/img2/icon_lupa.png" height="20" width="20"></a></td><%
+                                        %></tr><%
+                                            }
+                                        %>                                   
+                                </tbody>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Criado por Origamis Website 2021</div>
-                            <div>
-                                <a href="#">Pplitica de privacidade</a>
-                                &middot;
-                                <a href="#">Termos &amp; Condições</a>
-                            </div>
-                        </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Criado por Origamis Website 2021</div>
+                    <div>
+                        <a href="#">Pplitica de privacidade</a>
+                        &middot;
+                        <a href="#">Termos &amp; Condições</a>
                     </div>
-                </footer>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/datatables-demo.js"></script>
-    </body>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/datatables-demo.js"></script>
+</body>
 </html>

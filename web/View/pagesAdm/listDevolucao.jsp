@@ -1,5 +1,6 @@
+<%@page import="Modelo.Devolucao"%>
 <%@page import="Modelo.Funcionario"%>
-<%@page import="Modelo.Fabricante"%>
+<%@page import="Modelo.Categoria"%>
 <%@page import="java.util.List"%>
 
 <html lang="pt-br">
@@ -10,20 +11,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Lista de Fabricantes</title>
+        <title>Lista de Devoluções</title>
         <link href="View/pagesAdm/css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="View/pagesLogin/css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+            #pop{display:none;position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-100px;padding:10px;width:300px;height:200px;border:1px solid #d0d0d0;background-color: white}
+        </style>
 
     </head>
+
     <body class="sb-nav-fixed">
-        
-       <%
+        <%
             Funcionario fun = (Funcionario) session.getAttribute("funcionario");
-           if(fun == null){
-               response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginAdm.jsp");
-           }
+            if (fun == null) {
+                response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginAdm.jsp");
+            }
             Funcionario func = (Funcionario) session.getAttribute("logado");
         %>
 
@@ -41,7 +45,7 @@
                 </div>
             </form>
             <!-- Navbar-->
-             <!-- Navbar-->
+            <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="../pagesLogin/loginAdm.jsp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -104,124 +108,125 @@
             </div>
         </nav>
     </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid">
-                        <h1 class="mt-4">Lista de Fabricantes Cadastrados no Sistema</h1>
-                        <div class="row">
-                        </div>
-                        <%
-                            String SalvFabrimsg = (String) request.getAttribute("SalvFabrimsg");
-                            if (SalvFabrimsg != null) {
-                            %>
-                            <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p> <h5 id="titulo"><%= SalvFabrimsg%></h5></p>
-                                    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Lista de Pedidos de Devolução</h1>
+                <div class="row">
+                </div>
+                <%
+                    String salvCatemsg = (String) request.getAttribute("salvCatemsg");
+                    if (salvCatemsg != null) {
+                %>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p> <h5 id="titulo"><%= salvCatemsg%></h5></p>
+                    </div>
+                </div>
+
+                <%
+                    }
+                %>
+
+                <%
+                    String delCatmsg = (String) request.getAttribute("delCatmsg");
+                    if (delCatmsg != null) {
+                %>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p> <h5 id="titulo"><%= delCatmsg%></h5></p>
+                    </div>
+                </div>
+
+                <%
+                    }
+                %>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Tabela de Devoluções
+                    </div>
+                    <div class="card-body">
+                        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/PapelariaOrigami/devolucaoDesc" method="get">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Pesquisar" name="txtDescricao" aria-describedby="basic-addon2" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" name="acao"><i class="fas fa-search"></i></button>
                                 </div>
-                       
-                            <%
-                            }
-                            %>
-                            
-                            <%
-                            String delFabriemsg = (String) request.getAttribute("delFabriemsg");
-                            if (delFabriemsg != null) {
-                            %>
-                            <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p> <h5 id="titulo"><%=delFabriemsg%></h5></p>
-                                    </div>
-                                </div>
-                       
-                            <%
-                            }
-                            %>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table mr-1"></i>
-                                Tabela de Fabricantes
                             </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/PapelariaOrigami/FabricanteDesc" method="get">
-                                        <div class="input-group">
-                                            <input class="form-control" type="text" placeholder="Pesquisar" name="txtDescricao" aria-describedby="basic-addon2" />
-                                            <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit" name="acao"><i class="fas fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <p>
-                                    <p>
-                                    <p>    
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        </form>
+                        <p>
+                        <p>
+                        <p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="dataTable_filter" class="dataTables_filter">
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descrição</th>
-                                                <th>Sigla</th>
-                                                <th>CNPJ</th>
-                                                <th>Excluir</th>
-                                                <th>Alterar</th>
+                                                <th>Pedido</th>
+                                                <th>Nome</th>
+                                                <th>CPF</th>
+                                                <th>E-mail</th>
+                                                <th>Visualizar</th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             <%
-                                                List<Fabricante> lfabri = (List<Fabricante>) request.getAttribute("lfabri");
+                                                List<Devolucao> ldevolucao = (List<Devolucao>) request.getAttribute("ldevolucao");
 
-                                                for (Fabricante f : lfabri) {
+                                                for (Devolucao d : ldevolucao) {
                                             %><tr><%
-                                                %><td><%out.print(f.getId());%></td><%
-                                                %><td><%out.print(f.getDescricao());%></td><%
-                                                %><td><%out.print(f.getSigla());%></td><%
-                                                %><td><%out.print(f.getCnpj());%></td><%
-                                                %><td> <a href="http://localhost:8080/PapelariaOrigami/excluirFabricante?txtID=<%=f.getId()%>"><img src="View/pagesAdm/img2/icon_lixeira.png" height="20" name="excluir" width="20"></a></td><%
-                                                %><td> <a href="http://localhost:8080/PapelariaOrigami/alterarFabricante?txtID=<%=f.getId()%>"><img src="View/pagesAdm/img2/icon_lapis.png" height="20" width="20"></a></td><%
+                                                %><td><%out.print(d.getId());%></td><%
+                                                %><td><%out.print(d.getNumPedido());%></td><%
+                                                %><td><%out.print(d.getNome());%></td><%
+                                                %><td><%out.print(d.getCpf());%></td><%
+                                                %><td><%out.print(d.getEmail());%></td><%
+                                                %><td> <a href="http://localhost:8080/PapelariaOrigami/visualizarDevolucao?txtID=<%=d.getId()%>"><img src="View/pagesAdm/img2/icon_lupa.png" height="20" width="20"></a></td><%
                                                 %></tr><%
                                                     }
                                                 %>                                  
                                         </tbody>
-
                                         <tfoot>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descrição</th>
-                                                <th>Sigla</th>
-                                                <th>CNPJ</th>
-                                                <th>Excluir</th>
-                                                <th>Alterar</th>
+                                                <th>Pedido</th>
+                                                <th>Nome</th>
+                                                <th>CPF</th>
+                                                <th>E-mail</th>
+                                                <th>Visualizar</th>
                                             </tr>
                                         </tfoot>
-                                    </table>    
-                                        
+                                        </table>  
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    </main>
+                    <footer class="py-4 bg-light mt-auto">
+                        <div class="container-fluid">
+                            <div class="d-flex align-items-center justify-content-between small">
+                                <div class="text-muted">Criado por Origamis Website 2021</div>
+                                <div>
+                                    <a href="#">Pplitica de privacidade</a>
+                                    &middot;
+                                    <a href="#">Termos &amp; Condições</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Criado por Origamis Website 2021</div>
-                            <div>
-                                <a href="#">Pplitica de privacidade</a>
-                                &middot;
-                                <a href="#">Termos &amp; Condições</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                    </footer>
+                </div>
             </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="View/pagesAdm/js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/datatables-demo.js"></script>
-    </body>
-</html>
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+            <script src="View/pagesAdm/js/scripts.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+            <script src="assets/demo/chart-area-demo.js"></script>
+            <script src="assets/demo/chart-bar-demo.js"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+            <script src="assets/demo/datatables-demo.js"></script>
+            </body>
+            </html>
