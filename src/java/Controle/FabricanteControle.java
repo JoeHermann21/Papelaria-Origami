@@ -67,7 +67,7 @@ public class FabricanteControle extends HttpServlet {
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(FabricanteControle.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (uri.equals(request.getContextPath() + "/salvarFabricantes")) {
+        } else if (uri.equals(request.getContextPath() + "/salvarFabricante")) {
            try {
                 salvar(request, response);
             } catch (ClassNotFoundException | SQLException ex) {
@@ -152,8 +152,8 @@ public class FabricanteControle extends HttpServlet {
 
         if (id != null) {
             dao.atualizar(fabri);
-            List<Fabricante> categorias = dao.consultarTodos();
-            request.setAttribute("lfabri", categorias);
+            List<Fabricante> fabricantes = dao.consultarTodos();
+            request.setAttribute("lfabri", fabricantes);
             request.setAttribute("SalvFabrimsg", "Fabricante " + descricao + " foi alterado com sucesso!");
             request.getRequestDispatcher("/View/pagesAdm/listFabricante.jsp").forward(request, response);
         }
