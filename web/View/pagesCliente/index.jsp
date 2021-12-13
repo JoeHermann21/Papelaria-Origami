@@ -38,8 +38,8 @@
             </div>
             <div class="humberger__menu__cart">
                 <ul>
-                    <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                    <li><a href="#"><i class="fa fa-heart"></i> <span></span></a></li>
+                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
                 </ul>
                 <div class="header__cart__price">item: <span>R$ --</span></div>
             </div>
@@ -128,10 +128,10 @@
                     <div class="col-lg-3">
                         <div class="header__cart">
                             <ul>
-                                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                                <li><a href="#"><i class="fa fa-heart"></i> </a></li>
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i> </a></li>
                             </ul>
-                            <div class="header__cart__price">item: <span>R$ --</span></div>
+                            
                         </div>
                     </div>
                 </div>

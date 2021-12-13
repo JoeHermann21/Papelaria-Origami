@@ -1,4 +1,5 @@
 <%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.Endereco"%>
 <!DOCTYPE html>
 <html lang="PT-BR">
     <head>
@@ -14,15 +15,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
-        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-        <link rel="stylesheet" href="css/style.css" type="text/css">
-    </head> <%
+        <link rel="stylesheet" href="View/pagesCliente/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/style.css" type="text/css">
+    </head>
+    <%
         Cliente cli = (Cliente) session.getAttribute("cliente");
         if (cli == null) {
             response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginCliente.jsp");
@@ -98,23 +100,18 @@
 
     </script>
     <body>
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
 
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
         <div class="humberger__menu__wrapper">
             <div class="humberger__menu__logo">
-                <a href="#"><img src="img/logo.png" alt=""></a>
+                <a href="#"><img src="View/pagesCliente/img/logo.png" alt=""></a>
             </div>
             <div class="humberger__menu__cart">
-                <ul>
-                    <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <ul>                    
+                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span><% out.print(cli.getCarrinho().getItemArray().size()); %></span></a></li>
                 </ul>
-                <div class="header__cart__price">item: <span>$150.00</span></div>
+                <div class="header__cart__price">item: <span><% out.print(cli.getCarrinho().getValor()); %></span></div>
             </div>
             <div class="humberger__menu__widget">
                 <div class="header__top__right__language">
@@ -135,6 +132,7 @@
                     <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
                     <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
                 </ul>
+
             </nav>
             <div id="mobile-menu-wrap"></div>
             <div class="header__top__right__social">
@@ -203,15 +201,16 @@
                                 <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
                             </ul>
+
                         </nav>
                     </div>
                     <div class="col-lg-3">
                         <div class="header__cart">
                             <ul>
-                                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                                
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span><% out.print(cli.getCarrinho().getItemArray().size()); %></span></a></li>
                             </ul>
-                            <div class="header__cart__price">item: <span>$150.00</span></div>
+                            <div class="header__cart__price">item: <span><% out.print(cli.getCarrinho().getValor()); %></span></div>
                         </div>
                     </div>
                 </div>
@@ -285,13 +284,19 @@
             </div>
         </section>
         <!-- Breadcrumb Section End -->
+        <%
+            Endereco end = (Endereco) request.getAttribute("endereco");
+            if (end != null) {
 
+        %>
         <!-- Checkout Section Begin -->
         <section class="checkout spad">
             <div class="container">
                 <div class="checkout__form">
-                    <h4>Cadastre os dados de entrega</h4>
-                    <form method="POST" action="/PapelariaOrigami/cadastrarEndereco">
+
+                    <h3>Enviaremos seu pedido para este endereço.</h3>
+                    <h4>obs: Se desejar alterar seus dados, basta mudar o que você precisar, e clicar no botão "Alterar"</h4>
+                    <form method="POST" action="/PapelariaOrigami/atualizarEndereco">
                         <div class="row">
                             <div class="col-lg-8 col-md-6">
                                 <div class="row">
@@ -307,7 +312,7 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <label>Cep:
-                                                <input name="txtCep" type="text" id="cep" value="" size="10" maxlength="9"
+                                                <input name="txtCep" type="text" id="cep" size="10" maxlength="9" value="<%=end.getCep()%>"
                                                        onblur="pesquisacep(this.value);" /></label><br />
                                             <label><a>Não sabe seu CEP?</a></label>           
                                             <label><a href="http://www.buscacep.correios.com.br/sistemas/buscacep/">Clique Aqui</a></label>
@@ -318,7 +323,7 @@
                                     <div class="col-lg-6">   
                                         <div class="checkout__input">
                                             <label>Rua: *
-                                                <input name="txtRua" type="text" id="rua" size="60"/></label><br />
+                                                <input name="txtRua" type="text" id="rua" size="60" value="<%=end.getLogradouro()%>"/></label><br />
                                         </div>
 
                                     </div>
@@ -327,7 +332,7 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <label>Estado: *
-                                                <input name="txtUF" type="text" id="uf" size="2" readonly="true" /></label><br />
+                                                <input name="txtUF" type="text" id="uf" size="2" readonly="true" value="<%=end.getUf()%>" /></label><br />
                                         </div>
                                     </div>
                                 </div>
@@ -335,7 +340,7 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <label>Cidade: *
-                                                <input name="txtCidade" type="text" id="cidade" size="40" readonly="true" /></label><br />
+                                                <input name="txtCidade" type="text" id="cidade" size="40" readonly="true" value="<%=end.getCidade()%>" /></label><br />
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +348,7 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <label>Bairro: *
-                                                <input name="txtBairro" type="text" id="bairro" size="40"/></label><br />
+                                                <input name="txtBairro" type="text" id="bairro" size="40" value="<%=end.getBairro()%>"/></label><br />
                                         </div>
                                     </div>
                                 </div>
@@ -351,35 +356,42 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <p>Número<span>*</span></p>
-                                            <input type="text" name="txtNumero" id="numero"  class="form-control">
+                                            <input type="text" name="txtNumero" id="numero"  class="form-control" value="<%=end.getNumero()%>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <p>Complemento</p>
-                                            <input type="text" name="txtComple" id="complemento"  class="form-control" value="">
+                                            <input type="text" name="txtComple" id="complemento"  class="form-control" value="<%=end.getComplemento()%>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <p>Telefone<span>*</span></p>
-                                            <input type="text" name="txtTel" id="telefone"  class="form-control">
+                                            <input type="text" name="txtTel" id="telefone"  class="form-control" value="<%=cli.getTelefone()%>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    <input class="btn btn-primary" type="submit" value="Cadastrar" name="cad">
+                                    <input class="btn btn-primary" type="submit" value="Alterar" name="alt">
                                 </div>
-                                <p>
-                                <p>
-
+                                        <% if(cli.getCarrinho().getValor() != 0 ){ %>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    <a class="btn btn-primary" href="index.jsp">Cancelar</a>
-                                </div>
+                                    <a class="btn btn-primary" href="View/pagesCliente/pagamento.jsp">Proseguir para o pagamento</a>
+                                </div>  
+                                <% } %>
+                                <% } else {
+                                %>
+                                <h2>Endereco vazio</h2>
+                                <%
+                                    }
+                                %>
+                                <p>
+                                <p>
 
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <a href="#"><img src="img/entrega1.png" alt=""></a>
+                                <a href="#"><img src="View/pagesCliente/img/entrega1.png" alt=""></a>
                             </div>
                         </div>
                     </form>
@@ -414,8 +426,6 @@
         <script src="js/mixitup.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
-
-
 
     </body>
 

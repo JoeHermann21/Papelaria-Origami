@@ -7,7 +7,7 @@
         <meta name="keywords" content="Ogani, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Contato</title>
+        <title>Compra Finalizada</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -21,6 +21,25 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <style>
+            body{text-align: center; padding-top: 50px}
+
+            .estrelas input[type=radio] {
+                display: none;
+            }
+            .estrelas label i.fa{
+                font-size: 2.5em
+            }
+            .estrelas label i.fa:before {
+                content:'\f005';
+                color: #FC0;
+            }
+            .estrelas input[type=radio]:checked ~ label i.fa:before {
+                color: #CCC;
+            }
+        </style>
     </head>
 
     <body>
@@ -53,13 +72,15 @@
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                    <ul>
+                        <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                    </ul>
                 </ul>
             </nav>
             <div id="mobile-menu-wrap"></div>
@@ -121,13 +142,15 @@
                     <div class="col-lg-6">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                                <ul>
+                                    <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
+                                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                                </ul>
                             </ul>
                         </nav>
                     </div>
@@ -200,7 +223,7 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="breadcrumb__text">
-                            <h2>Contato da loja</h2>
+                            <h2>Papelaria Origami</h2>
                             <div class="breadcrumb__option">
                                 <a href="index.jsp">Home </a>
                                 <span>Contato</span>
@@ -247,52 +270,63 @@
                 </div>
             </div>
         </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Classifique sua satisfação</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="estrelas">
+            <input type="radio" id="cm_star-empty" name="fb" value="" checked/>
+            <label for="cm_star-1"><i class="fa"></i></label>
+            <input type="radio" id="cm_star-1" name="fb" value="1"/>
+            <label for="cm_star-2"><i class="fa"></i></label>
+            <input type="radio" id="cm_star-2" name="fb" value="2"/>
+            <label for="cm_star-3"><i class="fa"></i></label>
+            <input type="radio" id="cm_star-3" name="fb" value="3"/>
+            <label for="cm_star-4"><i class="fa"></i></label>
+            <input type="radio" id="cm_star-4" name="fb" value="4"/>
+            <label for="cm_star-5"><i class="fa"></i></label>
+            <input type="radio" id="cm_star-5" name="fb" value="5"/>
+        </div>
         <!-- Contact Section End -->
-
-        <!-- Map Begin -->
-        <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-                height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            <div class="map-inside">
-                <i class="icon_pin"></i>
-                <div class="inside-widget">
-                    <h4>Mogi das Cruzes</h4>
-                    <ul>
-                        <li>Telefone: +55 11.1188.888</li>
-                        <li>Rua Francisco Martis Nº512 - Mogi das Cruzes SP</li>
-                    </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2><font color="#FF0000">Parabéns!! Você finalizou sua compra com sucesso!</font></h2>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Map End -->
-
-        <!-- Contact Form Begin -->
-        <div class="contact-form spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="contact__form__title">
-                            <h2>ENVIE UMA MENSAGEM SOBRE O QUE ACHOU DA PAPELARIA</h2>
-                        </div>
+        <img src="img/congratulations.png" alt=""/>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3>Fique atento ao seu e-mail, logo mais enviaremos sua nota fiscal e atualizações sobre a entrega do produto.</h3>
                     </div>
                 </div>
-                <form action="#">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu Nome">
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu E-mail">
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <textarea placeholder="Escreva uma mensagem..."></textarea>
-                            <button type="submit" class="site-btn">Enviar E-mail</button>
-                        </div>
-                    </div>
-                </form>
+
             </div>
         </div>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Agradeçemos sua compra, e esperamos que nossos serviços tenham te atendido da melhor forma possível. Obrigado!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Contact Form End -->
 
         <!-- Footer Section Begin -->

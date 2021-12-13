@@ -1,3 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="Modelo.Pedido"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="org.apache.jasper.tagplugins.jstl.ForEach"%>
+<%@page import="Modelo.Produto"%>
+<%@page import="Modelo.Carrinho"%>
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.Endereco"%>
 <!DOCTYPE html>
 <html lang="PT-BR">
     <head>
@@ -7,27 +15,34 @@
         <meta name="keywords" content="Ogani, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Contato</title>
+        <title>Minha Conta</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
-        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/style.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+
     </head>
+    <%
+        Cliente cli = (Cliente) session.getAttribute("cliente");
+        if (cli == null) {
+            response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginCliente.jsp");
+        }
+
+
+    %>
 
     <body>
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
 
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
@@ -115,7 +130,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="header__logo">
-                            <a href="./index.html"><img src="img/logo_com_titulo.jpg" width="130" height="130" alt=""></a>
+                            <a href="./index.html"><img src="http://localhost:8080/PapelariaOrigami/View/pagesCliente/img/logo_com_titulo.jpg" width="130" height="130" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -124,7 +139,7 @@
                                 <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
-                                <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
+                                <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/checkout.jsp">Meu endereço</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
                                 <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
@@ -133,11 +148,13 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="header__cart">
+
                             <ul>
-                                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span><% out.print(cli.getCarrinho().getItemArray().size()); %></span></a></li>
                             </ul>
-                            <div class="header__cart__price">item: <span>$150.00</span></div>
+                            <div class="header__cart__price">item: <span><% out.print(cli.getCarrinho().getValor());%></span></div>
+
                         </div>
                     </div>
                 </div>
@@ -200,100 +217,139 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="breadcrumb__text">
-                            <h2>Contato da loja</h2>
+                            <h2>Meus Dados</h2>
                             <div class="breadcrumb__option">
-                                <a href="index.jsp">Home </a>
-                                <span>Contato</span>
+                                <a href="index.jsp">Home</a>
+                                <span>Meus Dados</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Breadcrumb Section End -->
-
-        <!-- Contact Section Begin -->
-        <section class="contact spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_phone"></span>
-                            <h4>Telefone</h4>
-                            <p>+55 11.1188.888</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_pin_alt"></span>
-                            <h4>Endereço</h4>
-                            <p>Rua Francisco Martis Nº512 - Mogi das Cruzes SP </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_clock_alt"></span>
-                            <h4>Aberto entre</h4>
-                            <p>8h às 12h e 13h às 20h</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_mail_alt"></span>
-                            <h4>Email</h4>
-                            <p>papelariaOrigami@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact Section End -->
-
-        <!-- Map Begin -->
-        <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-                height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            <div class="map-inside">
-                <i class="icon_pin"></i>
-                <div class="inside-widget">
-                    <h4>Mogi das Cruzes</h4>
-                    <ul>
-                        <li>Telefone: +55 11.1188.888</li>
-                        <li>Rua Francisco Martis Nº512 - Mogi das Cruzes SP</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Map End -->
-
-        <!-- Contact Form Begin -->
-        <div class="contact-form spad">
+        <!------------INFORMAÇÕES DA CONTA------------>
+        <section class="shoping-cart spad">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="contact__form__title">
-                            <h2>ENVIE UMA MENSAGEM SOBRE O QUE ACHOU DA PAPELARIA</h2>
-                        </div>
+
                     </div>
                 </div>
-                <form action="#">
+                <form>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu Nome">
+                        <div class="col-lg-6">
+                            <div class="shoping__checkout">
+                                <h2 align='center'>Informações da Conta</h2>
+                                <ul>
+                                    <div class="camposCartao">
+                                        <div class="checkout__input">
+                                            <p>Nome: </p>
+                                            <input type="text" name="txtNome" id="nome"  class="form-control" readonly="true" value="<%=cli.getNome()%>">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>Telefone: </p>
+                                            <input type="text" name="txtTelefone" id="telefone"  class="form-control" readonly="true" value="<%=cli.getTelefone()%>">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>CPF: </p>
+                                            <input type="text" name="txtCpf" id="cpf"  class="form-control" readonly="true" value="<%=cli.getCpf()%>">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>E-mail: </p>
+                                            <input type="text" name="txtEmail" id="email"  class="form-control" readonly="true" value="<%=cli.getEmail()%>">
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu E-mail">
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <textarea placeholder="Escreva uma mensagem..."></textarea>
-                            <button type="submit" class="site-btn">Enviar E-mail</button>
+                        <div class="col-lg-4 col-md-6">
+                            <img src="img/congratulations.png" alt=""/>
                         </div>
                     </div>
+
+                    <br>
+                    <br>
+                    <%
+                        List<Pedido> lped = (List<Pedido>) request.getAttribute("lped");
+                    %>
+                    <h2 align='center'><%out.print(lped.size()); %> Meus Pedidos</h2>                                       
+                    <section class="shoping-cart spad">
+                        <div class="container">
+
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="shoping__cart__table">
+                                        <table>                                             
+                                            <thead>
+                                                <tr>
+                                                    <th class="shoping__product">Pedido</th>
+                                                    <!-- <th>Produtos</th>
+                                                     <th>Unidades </th> -->
+                                                    <th>Valor Total</th>
+                                                    <th>Data Envio</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    for (Pedido p : lped) {
+                                                %> 
+                                                <tr>
+
+                                                    <td class="shoping__cart__item">
+                                                        <h5><%out.print(p.getId()); %></h5>                                            
+                                                    </td>
+                                                    <!--
+                                                    <td class="shoping__cart__price">
+
+                                                    </td>
+                                                    <td class="shoping__cart__quantity">
+                                                        <h5>uni</h5>
+                                                    </td>
+                                                    -->
+                                                    <td class="shoping__cart__total">
+                                                        <h5><%out.print(p.getValor()); %></h5>
+                                                    </td>
+                                                    <td class="shoping__cart__total">
+                                                        <h5><%out.print(p.getDataCompra()); %></h5>
+                                                    </td>
+                                                </tr>   
+                                                <%  }%>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!------------ENDEREÇO------------>
+                            <div class="row">
+                                <%
+                                    Endereco end = cli.getEndereco();
+                                %>
+                                <div class="col-lg-6">
+                                    <div class="shoping__checkout">
+                                        <h5><span>Endereço de Entrega</span></h5>
+                                        <ul>
+                                            <li>Logradouro: <span><%=end.getLogradouro()%> </span> </li>
+                                            <li>CEP: <span><%=end.getCep()%></span></li>
+                                            <li>Estado: <span><%=end.getUf()%></span></li>
+                                            <li>Bairro: <span><%=end.getBairro()%></span></li>
+                                            <li>Cidade: <span><%=end.getCidade()%></span></li>
+                                            <li>Número: <span><%=end.getNumero()%></span></li>
+                                            <li>Complemento: <span><%=end.getComplemento()%></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </form>
+
             </div>
-        </div>
-        <!-- Contact Form End -->
+        </section>
+        <!-- Shoping Cart Section End -->
 
         <!-- Footer Section Begin -->
         <footer class="footer spad">
@@ -320,7 +376,9 @@
         <script src="js/jquery.slicknav.js"></script>
         <script src="js/mixitup.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/main.js"></script>        
+        <script src="View/pagesCliente/js/main.js"></script>
+
 
 
 

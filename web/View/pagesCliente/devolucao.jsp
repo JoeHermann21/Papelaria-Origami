@@ -7,12 +7,21 @@
         <meta name="keywords" content="Ogani, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Contato</title>
+        <title>Devolução</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
+        <link rel="stylesheet" href="View/pagesCliente/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="View/pagesCliente/css/style.css" type="text/css">
+
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
@@ -22,18 +31,12 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
     </head>
-
     <body>
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
-
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
         <div class="humberger__menu__wrapper">
             <div class="humberger__menu__logo">
-                <a href="#"><img src="img/logo.png" alt=""></a>
+                <img src="img/logo.png" alt=""/>
             </div>
             <div class="humberger__menu__cart">
                 <ul>
@@ -48,18 +51,20 @@
                     <div>Português</div>
                 </div>
                 <div class="header__top__right__auth">
-                    <a href="http://localhost:8080/PapelariaOrigami/logout"><i class="fa fa-user"></i> Logout</a>
+                    <a href="../pagesLogin/loginCliente.jsp"><i class="fa fa-user"></i> Logout</a>
                 </div>
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
-                    <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                    <ul>
+                        <li class="active"><a href="http://localhost:8080/PapelariaOrigami/">Home</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/shopGrid">Shop</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/carrinho">Carrinho</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/meuendereco">Meu endereço</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/contact.jsp">Contato</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/areaCliente">Minha Conta</a></li>
+                        <li><a href="http://localhost:8080/PapelariaOrigami/View/pagesCliente/devolucao.jsp">Devolução</a></li>
+                    </ul>
                 </ul>
             </nav>
             <div id="mobile-menu-wrap"></div>
@@ -72,7 +77,7 @@
             <div class="humberger__menu__contact">
                 <ul>
                     <li><i class="fa fa-envelope"></i>papelOrigami.sup@outlook.com</li>
-                    <li>Bem Vindo!!</li>
+                    <li>Bem Vindo!! </li>                    
                 </ul>
             </div>
         </div>
@@ -115,7 +120,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="header__logo">
-                            <a href="./index.html"><img src="img/logo_com_titulo.jpg" width="130" height="130" alt=""></a>
+                            <a href="./index.html"><img src="http://localhost:8080/PapelariaOrigami/View/pagesCliente/img/logo_com_titulo.jpg" width="130" height="130" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -166,106 +171,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-9">
-                        <div class="hero__search">
-                            <div class="hero__search__form">
-                                <form action="#">
-                                    <div class="hero__search__categories">
-                                        Pesquisa
-                                        <span class="arrow_carrot-down"></span>
-                                    </div>
-                                    <input type="text" placeholder="O que você está procurando?">
-                                    <button type="submit" class="site-btn">Pesquisar</button>
-                                </form>
-                            </div>
-                            <div class="hero__search__phone">
-                                <div class="hero__search__phone__icon">
-                                    <i class="fa fa-phone"></i>
-                                </div>
-                                <div class="hero__search__phone__text">
-                                    <h5>+55 11.1188.888</h5>
-                                    <span>support 24/7 time</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
         <!-- Hero Section End -->
-
-        <!-- Breadcrumb Section Begin -->
-        <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="breadcrumb__text">
-                            <h2>Contato da loja</h2>
-                            <div class="breadcrumb__option">
-                                <a href="index.jsp">Home </a>
-                                <span>Contato</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Breadcrumb Section End -->
-
-        <!-- Contact Section Begin -->
-        <section class="contact spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_phone"></span>
-                            <h4>Telefone</h4>
-                            <p>+55 11.1188.888</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_pin_alt"></span>
-                            <h4>Endereço</h4>
-                            <p>Rua Francisco Martis Nº512 - Mogi das Cruzes SP </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_clock_alt"></span>
-                            <h4>Aberto entre</h4>
-                            <p>8h às 12h e 13h às 20h</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_mail_alt"></span>
-                            <h4>Email</h4>
-                            <p>papelariaOrigami@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact Section End -->
-
-        <!-- Map Begin -->
-        <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-                height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            <div class="map-inside">
-                <i class="icon_pin"></i>
-                <div class="inside-widget">
-                    <h4>Mogi das Cruzes</h4>
-                    <ul>
-                        <li>Telefone: +55 11.1188.888</li>
-                        <li>Rua Francisco Martis Nº512 - Mogi das Cruzes SP</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Map End -->
 
         <!-- Contact Form Begin -->
         <div class="contact-form spad">
@@ -273,21 +182,45 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="contact__form__title">
-                            <h2>ENVIE UMA MENSAGEM SOBRE O QUE ACHOU DA PAPELARIA</h2>
+                            <h2>ENVIE UMA IMAGEM DO PRODUTO, E O MOTIVO DA DEVOLUÇÃO</h2>
                         </div>
                     </div>
                 </div>
-                <form action="#">
+                <%
+                    String cadDevolucaoMsg = (String) request.getAttribute("cadDevolucaoMsg");
+                    if (cadDevolucaoMsg != null) {
+                %>
+                <div class="contact__form__title">
+                    <div class="checkout__input">
+                        <p> <h4 id="titulo"><%= cadDevolucaoMsg%></h4></p>
+                    </div>
+                </div>
+
+                <%
+                    }
+                %>
+                <form method="POST" action="/PapelariaOrigami/devolucaoProduto" enctype="multipart/form-data">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu Nome">
+                        <div class="col-lg-6 col-md-6">Nome
+                            <input type="text" placeholder="Seu Nome" name="txtNome" id="nome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu E-mail">
+                        <div class="col-lg-6 col-md-6">CPF
+                            <input type="text" placeholder="Seu CPF" name="txtCpf" id="cpf" maxlength="11" required onblur="javascript: formatarCampo(this);">
+                        </div>
+                        <div class="col-lg-6 col-md-6">E-mail
+                            <input type="email" placeholder="Seu E-mail" name="txtEmail" id="email">
+                        </div>
+                        <div class="col-lg-6 col-md-6">Número do pedido
+                            <input type="number" placeholder="Número do pedido" name="txtNumPedido" id="numPedido">
+                        </div>
+                        <div class="col-lg-12">Motivo da devolução
+                            <input placeholder="Escreva uma mensagem..." type="textarea" maxlength="200" name="txtMotivo" id="motivo">
+                        </div>
+                        <div class="col-lg-12">Anexe uma imagem do produto
+                            <input class="form-control py-1" id="inputFile" type="file"  name="file" />
                         </div>
                         <div class="col-lg-12 text-center">
-                            <textarea placeholder="Escreva uma mensagem..."></textarea>
-                            <button type="submit" class="site-btn">Enviar E-mail</button>
+                            <button name="acao" type="submit" class="site-btn">Enviar</button>
                         </div>
                     </div>
                 </form>

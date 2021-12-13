@@ -1,3 +1,8 @@
+<%@page import="Modelo.Cliente"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="org.apache.jasper.tagplugins.jstl.ForEach"%>
+<%@page import="Modelo.Produto"%>
+<%@page import="Modelo.Carrinho"%>
 <!DOCTYPE html>
 <html lang="PT-BR">
     <head>
@@ -7,7 +12,7 @@
         <meta name="keywords" content="Ogani, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Contato</title>
+        <title>Pagamento</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -21,13 +26,32 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+
+        <script>
+            function formatarCampo(campoTexto) {
+                campoTexto.value = mascaraCpf(campoTexto.value);
+            }
+            function mascaraCpf(valor) {
+                return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3\-\$4");
+            }
+            function formatarNumCartao(campoTexto) {
+                campoTexto.value = mascaraNumCartao(campoTexto.value);
+            }
+            function mascaraNumCartao(valor) {
+                return valor.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/g, "\$1 \$2 \$3\ \$4");
+            }
+        </script>
+        <%
+            Cliente cli = (Cliente) session.getAttribute("cliente");
+            if (cli == null) {
+                response.sendRedirect("/PapelariaOrigami/View/pagesLogin/loginCliente.jsp");
+            }
+        %>
     </head>
 
     <body>
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
 
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
@@ -200,10 +224,10 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="breadcrumb__text">
-                            <h2>Contato da loja</h2>
+                            <h2>Forma de Pagamento</h2>
                             <div class="breadcrumb__option">
-                                <a href="index.jsp">Home </a>
-                                <span>Contato</span>
+                                <a href="index.jsp">Home</a>
+                                <span>Pagamento</span>
                             </div>
                         </div>
                     </div>
@@ -212,88 +236,80 @@
         </section>
         <!-- Breadcrumb Section End -->
 
-        <!-- Contact Section Begin -->
-        <section class="contact spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_phone"></span>
-                            <h4>Telefone</h4>
-                            <p>+55 11.1188.888</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_pin_alt"></span>
-                            <h4>Endereço</h4>
-                            <p>Rua Francisco Martis Nº512 - Mogi das Cruzes SP </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_clock_alt"></span>
-                            <h4>Aberto entre</h4>
-                            <p>8h às 12h e 13h às 20h</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <div class="contact__widget">
-                            <span class="icon_mail_alt"></span>
-                            <h4>Email</h4>
-                            <p>papelariaOrigami@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact Section End -->
-
-        <!-- Map Begin -->
-        <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-                height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            <div class="map-inside">
-                <i class="icon_pin"></i>
-                <div class="inside-widget">
-                    <h4>Mogi das Cruzes</h4>
-                    <ul>
-                        <li>Telefone: +55 11.1188.888</li>
-                        <li>Rua Francisco Martis Nº512 - Mogi das Cruzes SP</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Map End -->
-
-        <!-- Contact Form Begin -->
-        <div class="contact-form spad">
+        <!-- Shoping Cart Section Begin -->
+        <section class="shoping-cart spad">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="contact__form__title">
-                            <h2>ENVIE UMA MENSAGEM SOBRE O QUE ACHOU DA PAPELARIA</h2>
-                        </div>
+
                     </div>
                 </div>
-                <form action="#">
+                <h4>Pagamento</h4>
+                <form>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu Nome">
+                        <div class="col-lg-6">
+                            <div class="shoping__checkout">
+                                <ul>
+                                    <h3>Total</h3>
+                                    <li><h2> R$<%=cli.getCarrinho().getValor()%></h2></li>
+                                </ul>
+                                <ul>
+                                    <li> <span>Dinheiro  <INPUT TYPE="RADIO" NAME="opcao" VALUE="dinheiro"></span></li>
+                                    <div class="camposDinheiro">
+                                        <a href="#"><img src="img/cash.png" alt=""></a><br>
+                                        No momento da entrega em sua residência será verificado o valor. <br> 
+                                        Caso seja divergênte ao valor total, a compra não será entregue.
+                                    </div>
+                                </ul>
+                                <ul>
+                                    <li> <span>PIX  <INPUT TYPE="RADIO" NAME="opcao" VALUE="pix"></span></li>
+                                    <div class="camposPix">
+                                        <a href="#"><img src="img/pix.png" alt=""></a><br>
+                                        Faça a transferência para o código abaixo: <br> 
+                                        XXX-XXX-XXX-XXX.
+                                    </div>
+                                </ul>
+                                <ul>
+                                    <li> <span>Cartão  <INPUT TYPE="RADIO" NAME="opcao" VALUE="cartao"></span></li>
+                                    <div class="camposCartao">
+                                        <a href="#"><img src="img/cartao.png" alt=""></a><br>
+                                        <div class="checkout__input">
+                                            <p>Nome Completo<span>*</span></p>
+                                            <input type="text" name="txtNome" id="numeroCartao"  class="form-control" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>Número do Cartão<span>*</span></p>
+                                            <input type="text" name="txtNumCartao" id="numeroCartao"  class="form-control" maxlength="16" required onblur="javascript: formatarNumCartao(this);">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>Código de segurança<span>*</span></p>
+                                            <input type="text" name="txtNumSeg" id="numeroCartao"  class="form-control" maxlength="3" required>
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>CPF<span>*</span></p>
+                                            <input type="text" name="txtCpf" id="cpf"  class="form-control" maxlength="11" required onblur="javascript: formatarCampo(this);">
+                                        </div>
+                                        <div class="checkout__input">
+                                            <p>Vencimento do cartão<span>*</span></p>
+                                            <input type="month" name="txtVencimento" id="cpf"  class="form-control" required pattern="[0-9]{2}-[0-9]{2}">
+                                        </div>
+                                        <span> A vista<INPUT TYPE="RADIO" NAME="parcela" VALUE="avista" checked></span><br>
+                                        <span> 3 Vezes<INPUT TYPE="RADIO" NAME="parcela" VALUE="3vezes" checked></span><br>
+                                        <span> 5 Vezes<INPUT TYPE="RADIO" NAME="parcela" VALUE="5vezes" checked></span><br>
+                                    </div>
+                                </ul>
+                                <a href="http://localhost:8080/PapelariaOrigami/novoPedido" name="confirma" class="primary-btn">Confirmar Pagamento</a>
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" placeholder="Seu E-mail">
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <textarea placeholder="Escreva uma mensagem..."></textarea>
-                            <button type="submit" class="site-btn">Enviar E-mail</button>
+                        <div class="col-lg-4 col-md-6">
+                            <a href="#"><img src="img/pay.png" alt=""></a>
                         </div>
                     </div>
                 </form>
+
             </div>
-        </div>
-        <!-- Contact Form End -->
+        </section>
+        <!-- Shoping Cart Section End -->
 
         <!-- Footer Section Begin -->
         <footer class="footer spad">
@@ -321,7 +337,6 @@
         <script src="js/mixitup.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
-
 
 
     </body>
