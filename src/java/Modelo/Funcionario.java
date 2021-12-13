@@ -32,10 +32,7 @@ public class Funcionario extends Usuario {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     */
+    
     @Override
     public void setId(int id) {
         this.id = id;

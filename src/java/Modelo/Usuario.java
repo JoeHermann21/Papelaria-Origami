@@ -10,11 +10,12 @@ package Modelo;
  * @author Guilherme
  */
 public class Usuario {
+
     private int id;
-    private String nome;
-    private String cpf;
-    private String senha ;
-    private String repeteSenha;
+    protected String nome;
+    protected String cpf;
+    protected String senha;
+    protected String repeteSenha;
 
     public Usuario() {
     }
@@ -22,7 +23,7 @@ public class Usuario {
     public Usuario(int id) {
         this.id = id;
     }
-    
+
     public Usuario(int id, String nome, String cpf, String senha, String repeteSenha) {
         this.id = id;
         this.nome = nome;
@@ -30,7 +31,16 @@ public class Usuario {
         this.senha = senha;
         this.repeteSenha = repeteSenha;
     }
-    
+
+    public Usuario(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
+    public Usuario(String nome) {
+        this.nome = nome;
+    }
+
     public int getId() {
         return id;
     }
@@ -76,7 +86,4 @@ public class Usuario {
         return "Usuario{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", repeteSenha=" + repeteSenha + '}';
     }
 
-    
-    
-    
 }

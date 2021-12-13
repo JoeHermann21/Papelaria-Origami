@@ -2,7 +2,7 @@ package Modelo;
 
 public class Categoria {
     private int id;
-    private String descricao;
+    public String descricao;
     private String sigla;
 
     public Categoria() {

@@ -26,6 +26,23 @@ public class Cliente extends Usuario {
         this.email = email;
     }
 
+    public Cliente(Integer id, Integer telefone, Endereco endereco, Carrinho carrinho, String email) {
+        this.id = id;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.carrinho = carrinho;
+        this.email = email;
+    }
+
+    public Cliente(Integer id, Integer telefone, Endereco endereco, Carrinho carrinho, String email, String nome, String cpf) {
+        super(nome, cpf);
+        this.id = id;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.carrinho = carrinho;
+        this.email = email;
+        
+    }
     public Cliente() {
     }
 
@@ -83,6 +100,22 @@ public class Cliente extends Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public String getRepeteSenha() {
+        return repeteSenha;
     }
 
     @Override
