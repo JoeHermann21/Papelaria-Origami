@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,9 +14,9 @@ import java.sql.SQLException;
  * @author Guilherme
  */
 public class conectaDB {
-    public static Connection getConexao() throws ClassNotFoundException, SQLException{
+     public static Connection getConexao() throws ClassNotFoundException, SQLException{
         Class.forName("org.postgresql.Driver");
-        Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Papelaria","postgres","postgres");
+        Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/PFCPapelaria","postgres","postgres");
         return con;
     }
 }
