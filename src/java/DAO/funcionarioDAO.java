@@ -6,19 +6,35 @@
 package DAO;
 
 import Modelo.Funcionario;
+import Modelo.Usuario;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.conectaDB;
+import Util.conectaDB;
 
 /**
  *
  * @author Guilherme
  */
 public class funcionarioDAO {
+    
+    public static String criptografar(String senha){
+        try{
+            MessageDigest digs = MessageDigest.getInstance("SHA-256");
+            digs.update((new String(senha)).getBytes("UTF8"));
+            String senhaCript = new String(digs.digest());
+            return senhaCript;            
+        
+        }catch (Exception e){
+            System.out.println("Erro ao criptografar" + e);
+            return "";
+        }
+    
+    } 
 
     public boolean checkLogin(Funcionario funcionario) throws ClassNotFoundException, SQLException {
         Connection conexao = conectaDB.getConexao();
@@ -26,19 +42,19 @@ public class funcionarioDAO {
         ResultSet resultado = null;
         boolean check = false;
 
-        ps = conexao.prepareStatement("SELECT u.id, u.nome, f.sobrenome, f.registro, u.cpf, u.senha " +
-                                        "FROM usuario u, funcionario f " +
-                                        "WHERE f.registro = ? and u.senha = ? and u.id=f.id");
+        ps = conexao.prepareStatement("SELECT id, nome, sobrenome, registro, cpf, senha " +
+                                        "FROM funcionario " +
+                                        "WHERE registro = ? and senha = ? ");
         ps.setInt(1, funcionario.getRegistro());
-        ps.setString(2, funcionario.getSenha());
+        ps.setString(2, criptografar(funcionario.getSenha()));
 
         resultado = ps.executeQuery();
 
         if (resultado.next()) {
             check = true;
-            System.out.println("Usu√°rio e senha corretos!");
+            System.out.println("Usu·rio e senha corretos!");
         } else {
-            System.out.println("Usu√°rio ou senha incorretos!");
+            System.out.println("Usu·rio ou senha incorretos!");
         }
         conexao.close();
         ps.close();
@@ -52,10 +68,14 @@ public class funcionarioDAO {
         try {
             Connection con = conectaDB.getConexao();
 
-            String sql = "insert into funcionario(sobrenome, registro) values(?,?)";
+            String sql = "insert into funcionario(nome, sobrenome, registro , cpf, senha, repetesenha) values(?,?,nextval('seq_registro'),?,?,?)";
             PreparedStatement comando = con.prepareStatement(sql);
-            comando.setString(1, func.getSobrenome());
-            comando.setInt(2, func.getRegistro());
+            comando.setString(1, func.getNome());
+            comando.setString(2, func.getSobrenome());
+            //comando.setInt(3, func.getRegistro());
+            comando.setString(3, func.getCpf());
+            comando.setString(4, criptografar(func.getSenha()));
+            comando.setString(5, criptografar(func.getRepeteSenha()));
 
             comando.execute();
 
@@ -70,17 +90,17 @@ public class funcionarioDAO {
         try {
             Connection con = conectaDB.getConexao();
 
-            String sql = "SELECT * FROM funcionario WHERE id=? ";
+            String sql = "SELECT * FROM funcionario WHERE id= ? ";
             PreparedStatement comando = con.prepareStatement(sql);
             comando.setInt(1, id);
 
             ResultSet resultado = comando.executeQuery();
             Funcionario f = new Funcionario();
             while (resultado.next()) {
-                f.setId(resultado.getInt("id"));
                 f.setSobrenome(resultado.getString("sobrenome"));
                 f.setRegistro(resultado.getInt("registro"));
-
+                f.setNome(resultado.getString("nome"));
+                f.setCpf(resultado.getString("cpf"));
             }
             return f;
         } catch (Exception e) {
@@ -88,6 +108,51 @@ public class funcionarioDAO {
         }
     }
 
+    public Funcionario consultarByReg(Integer registro) {
+
+        try {
+            Connection con = conectaDB.getConexao();
+
+            String sql = "SELECT * FROM funcionario WHERE registro= ? ";
+            PreparedStatement comando = con.prepareStatement(sql);
+            comando.setInt(1, registro);
+
+            ResultSet resultado = comando.executeQuery();
+            Funcionario f = new Funcionario();
+            while (resultado.next()) {
+                f.setSobrenome(resultado.getString("sobrenome"));
+                //f.setRegistro(resultado.getInt("registro"));
+                f.setNome(resultado.getString("nome"));
+                //f.setCpf(resultado.getString("cpf"));
+
+            }
+            return f;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public Funcionario consultarByCPF(String cpf) {
+
+        try {
+            Connection con = conectaDB.getConexao();
+
+            String sql = "SELECT cpf FROM funcionario WHERE cpf= ? ";
+            PreparedStatement comando = con.prepareStatement(sql);
+            comando.setString(1, cpf);
+
+            ResultSet resultado = comando.executeQuery();
+            Funcionario f = new Funcionario();
+            while (resultado.next()) {
+                f.setCpf(resultado.getString("cpf"));
+
+            }
+            return f;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void RemoverFunc(Funcionario func)
             throws ClassNotFoundException, SQLException {
         try (Connection con = conectaDB.getConexao()) {
@@ -102,11 +167,15 @@ public class funcionarioDAO {
     public void atualizar(Funcionario func) throws ClassNotFoundException, SQLException {
         try (
                 Connection con = conectaDB.getConexao()) {
-            String sql = "update funcionario SET sobrenome  = ?, registro = ? WHERE id =?;";
+            String sql = "update funcionario SET nome = ?, sobrenome  = ?, cpf = ?, registro = ?, senha = ?, repetesenha = ? WHERE id =?;";
             PreparedStatement atualizar = con.prepareStatement(sql);
-            atualizar.setString(1, func.getSobrenome());
-            atualizar.setInt(2, func.getRegistro());
-            atualizar.setInt(3, func.getId());
+            atualizar.setString(1, func.getNome());
+            atualizar.setString(2, func.getSobrenome());
+            atualizar.setString(3, func.getCpf());
+            atualizar.setInt(4, func.getRegistro());
+            atualizar.setString(5, criptografar(func.getSenha()));
+            atualizar.setString(6, criptografar(func.getRepeteSenha()));  
+            atualizar.setInt(7, func.getId());
 
             atualizar.execute();
 
@@ -120,7 +189,7 @@ public class funcionarioDAO {
         try (
                 Connection con = conectaDB.getConexao()) {
 
-            String sql = "select * from funcionario";
+            String sql = "SELECT id, nome, sobrenome, registro, cpf FROM funcionario ORDER BY id";
             PreparedStatement comando = con.prepareStatement(sql);
 
             ResultSet resultado = comando.executeQuery();
@@ -130,11 +199,40 @@ public class funcionarioDAO {
                 f.setId(resultado.getInt("id"));
                 f.setSobrenome(resultado.getString("sobrenome"));
                 f.setRegistro(resultado.getInt("registro"));
+                f.setNome(resultado.getString("nome"));
+                f.setCpf(resultado.getString("cpf"));
 
                 listafuncionario.add(f);
             }
 
         }
         return listafuncionario;
+    }
+    
+    public List<Funcionario> listByDescricao(String descricao) throws ClassNotFoundException, SQLException {
+        ArrayList<Funcionario> listaCategoriaDesc;
+
+        try (
+            Connection con = conectaDB.getConexao()) {
+
+            String sql = "SELECT * FROM funcionario WHERE nome ilike '"+descricao+"%' or cpf ilike '"+descricao+"%' ";
+            PreparedStatement comando = con.prepareStatement(sql);
+                        
+            ResultSet resultado = comando.executeQuery();
+            
+            listaCategoriaDesc = new ArrayList<>();
+            while (resultado.next()) {
+                Funcionario f = new Funcionario();
+                f.setId(resultado.getInt("id"));
+                f.setSobrenome(resultado.getString("sobrenome"));
+                f.setRegistro(resultado.getInt("registro"));
+                f.setNome(resultado.getString("nome"));
+                f.setCpf(resultado.getString("cpf"));
+                
+                listaCategoriaDesc.add(f);
+            }
+
+        }
+        return listaCategoriaDesc;
     }
 }

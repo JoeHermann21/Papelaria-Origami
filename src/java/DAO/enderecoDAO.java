@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.conectaDB;
+import Util.conectaDB;
 
 /**
  *
@@ -32,7 +32,7 @@ public class enderecoDAO {
             ResultSet resultado = comando.executeQuery();
 
             while (resultado.next()) {
-                Integer cep = resultado.getInt("cep");
+                String cep = resultado.getString("cep");
                 String uf = resultado.getString("uf");
                 String cidade = resultado.getString("cidade");
                 String bairro = resultado.getString("bairro");
@@ -42,10 +42,11 @@ public class enderecoDAO {
 
                 en = new Endereco(id, cep, uf, cidade, bairro, logradouro, numero, complemento);
             }
-
+            con.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         return en;
     }
 
@@ -64,7 +65,7 @@ public class enderecoDAO {
             listaendereco = new ArrayList<>();
             while (resultado.next()) {
                 Integer id = resultado.getInt("id");
-                Integer cep = resultado.getInt("cep");
+                String cep = resultado.getString("cep");
                 String uf = resultado.getString("uf");
                 String cidade = resultado.getString("cidade");
                 String bairro = resultado.getString("bairro");
@@ -75,26 +76,26 @@ public class enderecoDAO {
                 en = new Endereco(id, cep, uf, cidade, bairro, logradouro, numero, complemento);
                 listaendereco.add(en);
             }
-
+            con.close();
         }
         return listaendereco;
     }
 
     public Endereco consultarByEnderecoENumero(String logradouro, Integer numero) {
-        
+
         Endereco en = null;
-        
+
         try (Connection con = conectaDB.getConexao();
-                PreparedStatement comando = 
-                con.prepareStatement("select * from endereco where logradouro = ? and numero = ?");){
-                                                    
+                PreparedStatement comando
+                = con.prepareStatement("select * from endereco where logradouro = ? and numero = ?");) {
+
             comando.setString(1, logradouro);
             comando.setInt(2, numero);
             ResultSet resultado = comando.executeQuery();
-                                                   
+
             while (resultado.next()) {
                 Integer id = resultado.getInt("id");
-                Integer cep = resultado.getInt("cep");
+                String cep = resultado.getString("cep");
                 String uf = resultado.getString("uf");
                 String cidade = resultado.getString("cidade");
                 String bairro = resultado.getString("bairro");
@@ -102,61 +103,65 @@ public class enderecoDAO {
 
                 en = new Endereco(id, cep, uf, cidade, bairro, logradouro, numero, complemento);
             }
-
+            con.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return en;
-}
-    
-    public void cadastrar(Endereco end) throws ClassNotFoundException, SQLException {
+    }
 
+    public int cadastrar(Endereco end) throws ClassNotFoundException, SQLException {
+        int id = 0;
         try {
-            Connection con = conectaDB.getConexao();      
+            Connection con = conectaDB.getConexao();
 
-            String sql = "INSERT INTO public.endereco " +
-                            "(cep, uf, cidade, bairro, logradouro, numero, complemento) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO public.endereco "
+                    + "(cep, uf, cidade, bairro, logradouro, numero, complemento) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id;";
             PreparedStatement comando = con.prepareStatement(sql);
-            comando.setInt(1, end.getCep());
+            comando.setString(1, end.getCep());
             comando.setString(2, end.getUf());
             comando.setString(3, end.getCidade());
-            comando.setString(4, end.getBairro());                
+            comando.setString(4, end.getBairro());
             comando.setString(5, end.getLogradouro());
             comando.setInt(6, end.getNumero());
             comando.setString(7, end.getComplemento());
 
-            comando.execute();
-
+            ResultSet resultado = comando.executeQuery();
+             while (resultado.next()) {
+                 id = resultado.getInt("id");
+             }
             System.out.println("CADASTROU");
+            con.close();
         } catch (SQLException e) {
             System.out.println("ERRO AO CADASTRAR: " + e);
         }
+        return id;
     }
-    
+
     public void atualizar(Endereco end) throws ClassNotFoundException, SQLException {
         try (
                 Connection con = conectaDB.getConexao()) {
-            String sql = "UPDATE endereco " +
-                        "   SET cep=?, uf=?, cidade=?, bairro=?, logradouro=?, numero=?, complemento=? " +
-                        " WHERE id = ?";      
-              
-            PreparedStatement atualizar = con.prepareStatement(sql);           
-            atualizar.setInt(1, end.getCep());
+            String sql = "UPDATE endereco "
+                    + "   SET cep=?, uf=?, cidade=?, bairro=?, logradouro=?, numero=?, complemento=? "
+                    + " WHERE id = ?";
+
+            PreparedStatement atualizar = con.prepareStatement(sql);
+            atualizar.setString(1, end.getCep());
             atualizar.setString(2, end.getUf());
             atualizar.setString(3, end.getCidade());
-            atualizar.setString(4, end.getBairro());                
+            atualizar.setString(4, end.getBairro());
             atualizar.setString(5, end.getLogradouro());
             atualizar.setInt(6, end.getNumero());
             atualizar.setString(7, end.getComplemento());
             atualizar.setInt(8, end.getId());
 
             atualizar.execute();
-
+            con.close();
         }
 
     }
-    
+
     public void RemoverProd(Endereco end)
             throws ClassNotFoundException, SQLException {
         try (Connection con = conectaDB.getConexao()) {
@@ -165,6 +170,7 @@ public class enderecoDAO {
             comando.setInt(1, end.getId());
 
             comando.execute();
+            con.close();
         }
     }
 }

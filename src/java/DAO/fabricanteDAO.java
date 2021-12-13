@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.conectaDB;
+import Util.conectaDB;
 
 /**
  *
@@ -38,6 +38,7 @@ public class fabricanteDAO {
                 fab.setSigla(resultado.getString("sigla"));
                 fab.setCnpj(resultado.getString("cnpj"));
             }
+            con.close();
             return fab;
             
         } catch (Exception e) {
@@ -123,7 +124,7 @@ public class fabricanteDAO {
         try (
                 Connection con = conectaDB.getConexao()) {
 
-            String sql = "select * from fabricante";
+            String sql = "select * from fabricante ORDER BY id";
             PreparedStatement comando = con.prepareStatement(sql);
 
             ResultSet resultado = comando.executeQuery();

@@ -6,19 +6,36 @@
 package DAO;
 
 import Modelo.Usuario;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.conectaDB;
+import Util.conectaDB;
 
 /**
  *
  * @author Guilherme
  */
 public class usuarioDAO {
+    
+     public static String criptografar(String senha){
+        try{
+            MessageDigest digs = MessageDigest.getInstance("SHA-256");
+            digs.update((new String(senha)).getBytes("UTF8"));
+            String senhaCript = new String(digs.digest());
+            return senhaCript;            
+        
+        }catch (Exception e){
+            System.out.println("Erro ao criptografar" + e);
+            return "";
+        }
+    
+    } 
 
     public Usuario consultarById(Integer id) {
 
@@ -124,16 +141,17 @@ public class usuarioDAO {
     public void cadastrar(Usuario u) throws ClassNotFoundException, SQLException {
 
         try {
-            Connection con = conectaDB.getConexao();      
+            Connection con = conectaDB.getConexao();   
+
 
             String sql = "INSERT INTO usuario " +
                         "(nome, cpf, senha, repetesenha) " +
                         "VALUES (?, ?, ?, ?);";
             PreparedStatement comando = con.prepareStatement(sql);
             comando.setString(1, u.getNome());
-            comando.setString(2, u.getCpf());
-            comando.setString(3, u.getSenha());
-            comando.setString(4, u.getRepeteSenha());                
+            comando.setString(2, u.getCpf());       
+            comando.setString(3, criptografar(u.getSenha()));
+            comando.setString(4, criptografar(u.getRepeteSenha()));           
 
             comando.execute();
 
@@ -153,8 +171,8 @@ public class usuarioDAO {
             PreparedStatement atualizar = con.prepareStatement(sql);
             atualizar.setString(1, u.getNome());
             atualizar.setString(2, u.getCpf());
-            atualizar.setString(3, u.getSenha());
-            atualizar.setString(4, u.getRepeteSenha());
+            atualizar.setString(3, criptografar(u.getSenha()));
+            atualizar.setString(4, criptografar(u.getRepeteSenha()));  
             atualizar.setInt(5, u.getId());
 
             atualizar.execute();
